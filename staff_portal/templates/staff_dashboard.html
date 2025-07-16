@@ -1,0 +1,16 @@
+<!-- staff_portal/templates/staff_dashboard.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NEC Staff Portal</title>
+  <link rel="stylesheet" href="{% static 'staff_portal/css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, {{ user.username }}</h2>
+    <p>This is where NEC staff manage voters and results.</p>
+    <a href="{% url 'logout' %}">Logout</a>
+  </div>
+</body>
+</html>

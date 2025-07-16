@@ -1,0 +1,25 @@
+<!-- staff_portal/templates/register.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Staff Registration</title>
+  <link rel="stylesheet" href="{% static 'staff_portal/css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Register Staff</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <label>Capture Face:</label><br>
+      <video id="video" width="320" height="240" autoplay></video>
+      <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+      <input type="hidden" name="image" id="captured_image">
+      <button type="button" onclick="capture()">Capture</button>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+  <script src="{% static 'staff_portal/js/camera.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- staff_portal/templates/login.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NEC Secure Login</title>
+  <link rel="stylesheet" href="{% static 'staff_portal/css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>NEC Secure Login</h2>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <form method="POST">
+      {% csrf_token %}
+      <label>Username or Staff ID:</label>
+      <input type="text" name="username" required>
+      <label>Password:</label>
+      <input type="password" name="password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p>You need the helper app to access the system.<br>
+      <a href="{% static 'downloads/send_device_info.exe' %}" download>Download Helper App (.exe)</a></p>      
+    <p>Not registered? <a href="{% url 'register' %}">Register Here</a></p>
+  </div>
+</body>
+</html>

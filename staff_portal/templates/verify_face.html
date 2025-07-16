@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Face Verification</title>
+</head>
+<body>
+    <video id="video" width="320" height="240" autoplay></video>
+    <button id="snap">Capture</button>
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+    <form method="POST" enctype="multipart/form-data" id="faceForm">
+        {% csrf_token %}
+        <input type="file" name="live_photo" id="photoInput" style="display:none;" />
+        <button type="submit">Verify Face</button>
+    </form>
+    
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snap = document.getElementById('snap');
+        const photoInput = document.getElementById('photoInput');
+    
+        // Access webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => { video.srcObject = stream; });
+    
+        snap.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+            canvas.toBlob(blob => {
+                const file = new File([blob], 'live_photo.png', { type: 'image/png' });
+    
+                // Create DataTransfer to set file input programmatically
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                photoInput.files = dataTransfer.files;
+            });
+        });
+    </script>
+    
+</body>
+</html>

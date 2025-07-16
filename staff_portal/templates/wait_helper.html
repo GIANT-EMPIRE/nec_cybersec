@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Waiting for Device Verification...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            background-color: #f2f2f2;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fade-text {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #555;
+            animation: fadeInOut 2s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        #verified-message {
+            margin-top: 30px;
+            font-size: 18px;
+            color: green;
+            display: none;
+        }
+    </style>
+
+    <script>
+        function checkVerification() {
+            fetch('/check_verification/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.verified) {
+                        // Show verified message with BIOS and Baseboard
+                        document.querySelector('.loader').style.display = 'none';
+                        document.querySelector('.fade-text').style.display = 'none';
+
+                        const msgDiv = document.getElementById('verified-message');
+                        msgDiv.style.display = 'block';
+                        msgDiv.innerHTML = `
+                            <p>Your device is verified!</p>
+                            <p><strong>BIOS Serial:</strong> ${data.bios}</p>
+                            <p><strong>Baseboard Serial:</strong> ${data.baseboard}</p>
+                            <p>Redirecting to OTP page...</p>
+                        `;
+
+                        // Redirect after 3 seconds
+                        setTimeout(() => {
+                            window.location.href = "/otp/";
+                        }, 3000);
+                    } else {
+                        setTimeout(checkVerification, 2000);
+                    }
+                });
+        }
+
+        window.onload = checkVerification;
+    </script>
+</head>
+<body>
+    <div class="loader"></div>
+    <div class="fade-text">Loading... Waiting for device verification</div>
+    <div id="verified-message"></div>
+</body>
+</html>

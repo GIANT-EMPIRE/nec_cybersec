@@ -1,0 +1,35 @@
+<!-- staff_portal/templates/admin_panel.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NEC Admin Panel</title>
+  <link rel="stylesheet" href="{% static 'staff_portal/css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome Admin</h2>
+    <h3>Registered Devices</h3>
+    <ul>
+      {% for d in devices %}
+        <li>{{ d.serial_bios }} | {{ d.serial_baseboard }} 
+        <form method="post" action="{% url 'delete_device' d.id %}" style="display:inline;">{% csrf_token %}
+          <button type="submit">Delete</button>
+        </form>
+        </li>
+      {% empty %}
+        <li>No devices registered.</li>
+      {% endfor %}
+    </ul>
+    <h3>Unauthorized Attempts</h3>
+    <ul>
+      {% for a in attempts %}
+        <li>{{ a.bios }} | {{ a.baseboard }} @ {{ a.attempted_at }}</li>
+      {% empty %}
+        <li>No unauthorized devices.</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'logout' %}">Logout</a>
+  </div>
+</body>
+</html>

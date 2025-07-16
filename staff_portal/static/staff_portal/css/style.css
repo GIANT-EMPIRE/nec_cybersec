@@ -1,0 +1,45 @@
+/* staff_portal/static/staff_portal/css/style.css */
+body {
+    background: #f4f7f8;
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.1);
+    border-radius: 8px;
+  }
+  h2 {
+    text-align: center;
+    color: #003e6b;
+  }
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+  input[type=text], input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  button {
+    background: #003e6b;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #005599;
+  }
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="{% static 'staff_portal/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Two-Factor Authentication</h2>
+        <p>An OTP has been sent to your registered email.</p>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="otp">Enter OTP</label>
+            <input type="text" name="otp" id="otp" placeholder="e.g. 123456" required>
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+</body>
+</html>
